@@ -6,35 +6,37 @@ let foodColor='green';
 const gameScreen = document.getElementById('gameScreen');
 
 // const io = require('socket.io')(); 
-console.log('yyyyyyyyyyy');
-const socket = io('http://localhost:3000');
-console.log('aaaaaaaaaaaaaa');
+// console.log('yyyyyyyyyyy');
+const socket = io('https://sleepy-island-33889.herokuapp.com/');
+// console.log('aaaaaaaaaaaaaa');
 socket.on('init', handelInit);
-console.log('tttttttt');
+// console.log('tttttttt');
+socket.on('gameState', handelGameState);
+
 
 let canvas , ctx;
 
-const gameState = {
-  player : {
-    x : 3,
-    y : 10,
-  },
-  vel :{
-    x : 1,
-    y : 0,
-  },
-  snake : [
-    {x:1, y:10},
-    {x:2, y:10},
-    {x:3, y:10},
+// const gameState = {
+//   player : {
+//     x : 3,
+//     y : 10,
+//   },
+//   vel :{
+//     x : 1,
+//     y : 0,
+//   },
+//   snake : [
+//     {x:1, y:10},
+//     {x:2, y:10},
+//     {x:3, y:10},
 
-  ],
-  food : {
-    x : 7, 
-    y : 7,
-  },
-  gridsize : 20,
-};
+//   ],
+//   food : {
+//     x : 7, 
+//     y : 7,
+//   },
+//   gridsize : 20,
+// };
 
 function init(){
 
@@ -49,7 +51,8 @@ function init(){
   document.addEventListener('keydown', keydown);
 }
 function keydown(e){
-  console.log(e.keyCode);
+  // console.log(e.keyCode);
+  socket.emit('keydown', e.keyCode);
 }
 
 init();
@@ -72,7 +75,7 @@ function paintGame(state){
 }
 
 function paintPlayer(playerState, size, colour) {
-  const snake = gameState.snake;
+  const snake = playerState.snake;
 
   ctx.fillStyle = colour;
 
@@ -81,10 +84,15 @@ function paintPlayer(playerState, size, colour) {
   }
 }
 
-paintGame(gameState);
+// paintGame(gameState);
 
 function handelInit(msg){
   console.log(msg);
 }
 
-
+function handelGameState (gameState){
+  gameState = JSON.parse(gameState);
+  requestAnimationFrame(()=>{
+    paintGame(gameState);
+  });
+}
