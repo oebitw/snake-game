@@ -65,19 +65,26 @@ io.on('connection', client => {
     client.number = 1;
     client.emit('init',1);
   }
+
+
   function handleKeydown(keyCode) {
-    try {
-      keyCode = parseInt(keyCode);
-    } catch (e) {
-      console.log(e);
+    const roomName = clientRooms[client.id];
+    if (!roomName) {
       return;
     }
+    try {
+      keyCode = parseInt(keyCode);
+    } catch(e) {
+      console.error(e);
+      return;
+    }
+
     const vel = getUpdatedVelocity(keyCode);
+
     if (vel) {
-      state.player.vel = vel;
+      state[roomName].players[client.number - 1].vel = vel;
     }
   }
-  // startGameInterval(client, state);   // removed and added to joinGameHandler
 });
 
 // changed startGameInterval function
@@ -87,7 +94,7 @@ function startGameInterval(roomName) {
     const winner = gameLoop(state[roomName]);
     
     if (!winner) {
-      emitGameState(roomName, state[roomName])
+      emitGameState(roomName, state[roomName]);
     } else {
       emitGameOver(roomName, winner);
       state[roomName] = null;
@@ -109,6 +116,7 @@ function emitGameOver(room, winner) {
   io.sockets.in(room)
     .emit('gameOver', JSON.stringify({ winner }));
 }
+
 
 
 io.listen(process.env.PORT||3000);
