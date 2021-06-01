@@ -8,6 +8,7 @@ let foodColor='#e66916';
 
 // const io = require('socket.io')(); 
 // console.log('yyyyyyyyyyy');
+// eslint-disable-next-line no-undef
 const socket = io('https://sleepy-island-33889.herokuapp.com/');
 // console.log('aaaaaaaaaaaaaa');
 socket.on('init', handelInit);
@@ -42,27 +43,6 @@ function joinGame(){
 let canvas , ctx;
 let gameActive = false;
 let playerNumber;
-// const gameState = {
-//   player : {
-//     x : 3,
-//     y : 10,
-//   },
-//   vel :{
-//     x : 1,
-//     y : 0,
-//   },
-//   snake : [
-//     {x:1, y:10},
-//     {x:2, y:10},
-//     {x:3, y:10},
-
-//   ],
-//   food : {
-//     x : 7, 
-//     y : 7,
-//   },
-//   gridsize : 20,
-// };
 
 
 /* changeds:     ----------------------
@@ -75,7 +55,7 @@ function init(){
   canvas = document.getElementById('canvas');
   ctx = canvas.getContext('2d');
   
-  canvas.width = canvas.height = 650;
+  canvas.width = canvas.height = 800;
   
   ctx.fillStyle = bgColor;
   ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -158,4 +138,5 @@ function reset(){
   gameCodeInput.value='';
   initialScreen.style.display='block';
   gameScreen.style.display='none';
+  gameCodeDisplay.innerText='';
 }
