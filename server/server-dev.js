@@ -5,9 +5,9 @@ const io = require('socket.io')();
 // Imported makeid from utlis.js
 // const { createGameState, gameLoop, getUpdatedVelocity } = require('./game');
 
-const { initGame, gameLoop, getUpdatedVelocity } = require('./game');
+const { initGame, gameLoop, getUpdatedVelocity } = require('./game-dev');
 const { FRAME_RATE } = require('./constants');
-const { makeid } = require('./utlis');
+const { makeid } = require('./utlis-dev');
 
 const state ={};     // added state to check the states of all possible rooms  ----------
 const clientRooms = {}; // to check room name with a particular user id ----------

@@ -1,6 +1,6 @@
 'use strict'; 
 
-const {GRID_SIZE} = require('../../server/constants.js');
+const {GRID_SIZE} = require('./constants');
 
 // removed createGameState and added initGame ------------
 module.exports= {
@@ -16,9 +16,7 @@ function initGame(){
   const state = createGameState();
   randomFood(state);
   return state;
-
 }
-
 
 function createGameState() {
   return {
