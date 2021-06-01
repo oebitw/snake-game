@@ -16,9 +16,7 @@ function initGame(){
   const state = createGameState();
   randomFood(state);
   return state;
-
 }
-
 
 function createGameState() {
   return {
