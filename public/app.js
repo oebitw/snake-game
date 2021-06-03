@@ -9,7 +9,7 @@ let foodColor='#e66916';
 // const io = require('socket.io')(); 
 // console.log('yyyyyyyyyyy');
 // eslint-disable-next-line no-undef
-const socket = io('https://vast-ridge-32007.herokuapp.com/');
+const socket = io('https://sleepy-island-33889.herokuapp.com/');
 // console.log('aaaaaaaaaaaaaa');
 socket.on('init', handelInit);
 socket.on('gameState', handelGameState);
