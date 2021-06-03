@@ -17,25 +17,33 @@
     <div class="container h-100">
 
       <div id="initialScreen" class="h-100">
-        <div id="style" class="d-flex flex-column align-items-center justify-content-center h-100">
+        <div style="border: 5px solid rgb(205, 221, 203);
+        border-radius: 5px;
+        box-shadow: 5px 5px 10px;" class="d-flex flex-column align-items-center justify-content-center h-100">
             <h1>Multiplayer Snake</h1>
+            <br>
             <button
+            style="box-shadow: 5px 5px 5px green;"
               type="submit"
               class="btn btn-success"
               id="newGameButton"
             >
-              Create New Game
+              <h3>Create New Game</h3> 
             </button>
-            <div>OR</div>
+            <br>
+            <h2>OR</h2>
             <div class="form-group">
-              <input type="text" placeholder="Enter Game Code" id="gameCodeInput"/>
+              <input style="height: fit-content; font-size: xx-large;" type="text" placeholder="Enter Game Code" id="gameCodeInput"/>
             </div>
+            <br>
             <button
+            style="box-shadow: 5px 5px 5px green;
+                   width: 280px;"
               type="submit"
               class="btn btn-success"
               id="joinGameButton"
             >
-              Join Game
+              <h3>Join Game</h3> 
             </button>
         </div>
       </div>

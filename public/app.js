@@ -72,7 +72,8 @@ function keydown(e){
 
 function paintGame(state){
   // ctx.fillStyle = bgColor;
-
+  ctx.fillStyle = '#1C1D24';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
   let grd = ctx.createLinearGradient(0.000, 150.000, 300.000, 150.000);
   // Add colors
   grd.addColorStop(0.000, 'rgba(247, 149, 51, 1.000)');
@@ -91,13 +92,16 @@ function paintGame(state){
 
   // console.log(state.players[0].snake.length);
   for (let i = 0; i < state.players[0].snake.length; i++) {
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
+    ctx.fillRect(
+      state.players[0].snake[i].x * gridsize,
+      state.players[0].snake[i].y * gridsize,
+      gridsize,
+      gridsize,
+    );
     // if (state.snake[i].x == state.snakeX && state.snake[i].y == state.snakeY) {
     //   state.size = 3;
     // }
   }
-  // ctx.fillRect(0, 0, canvas.width, canvas.height);
 
   const food = state.food;
 

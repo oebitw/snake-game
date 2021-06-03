@@ -1,5 +1,5 @@
-.style{
-    border: 5px solid rgb(203, 221, 209);
+.border{
+    border: 5px solid rgb(205, 221, 203);
     border-radius: 5px;
     box-shadow: 5px 5px 10px;
 }
