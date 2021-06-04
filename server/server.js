@@ -1,9 +1,20 @@
 'use strict';
-const io = require('socket.io')();
 
-// removed createGameState and added initGame instead:  ----------
-// Imported makeid from utlis.js
-// const { createGameState, gameLoop, getUpdatedVelocity } = require('./game');
+const app = require('express')();
+const http = require('http');
+const httpServer=http.createServer(app);
+const io = require('socket.io')(http,{cors: {
+  origin: '*',
+  methods: ['GET', 'POST'],
+}});
+
+
+io.listen(httpServer);
+const express = require('express');
+const cors = require('cors');
+app.use(cors());
+app.use(express.static('../public'));
+
 
 const { initGame, gameLoop, getUpdatedVelocity } = require('./game-dev');
 const { FRAME_RATE } = require('./constants');
@@ -13,10 +24,8 @@ const state ={};     // added state to check the states of all possible rooms  -
 const clientRooms = {}; // to check room name with a particular user id ----------
 
 io.on('connection', client => {
-  //   client.emit('init', {data : 'hello world'});
-  // const state = createGameState();    // Moved and edited in newGame handler ----------
-
-
+  
+  console.log('run socket');
   // Fixed functions names ------------- 
   client.on('keydown', handleKeydown);
   client.on('newGame', handleNewGame);     //  called newGame event ----------
@@ -26,11 +35,12 @@ io.on('connection', client => {
 
   function handleJoinGame(roomName) {
     const room = io.sockets.adapter.rooms[roomName];
-
     let allUsers;
     if (room) {
       allUsers = room.sockets;
     }
+    console.log('iiiiiiiiiiiiiii',room);
+
 
     let numClients = 0;
     if (allUsers) {
@@ -48,6 +58,7 @@ io.on('connection', client => {
     clientRooms[client.id] = roomName;
 
     client.join(roomName);
+
     client.number = 2;
     client.emit('init', 2);
     
@@ -56,11 +67,14 @@ io.on('connection', client => {
 
   // added newGame event handler ----------
 
-  function handleNewGame(){             
+  function handleNewGame(){     
     let roomName = makeid(5);
     clientRooms[client.id] = roomName;
+    console.log('in handel game');        
     client.emit('gameCode', roomName);
-    state[roomName] = initGame(); 
+    state[roomName] = initGame();
+    console.log('after init',state[roomName]);
+
     client.join(roomName);
     client.number = 1;
     client.emit('init',1);
@@ -119,5 +133,5 @@ function emitGameOver(room, winner) {
 
 
 
-io.listen(process.env.PORT||3000);
+httpServer.listen(process.env.PORT||3000);
 console.log('PORT 3000');
