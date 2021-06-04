@@ -10,20 +10,45 @@
 #gameScreen {
   display: none;
 }
+.background-sound{
+  display: none;
+}
+#joinGameButton{
+  width: 280px;
+}
+
+body{
+  background-image: url(background.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+#box{
+  border: 5px solid rgb(205, 221, 203);
+  border-radius: 5px; 
+  box-shadow: 5px 5px 10px; 
+  padding: 10px;
+  margin: 50px;
+}
+button{
+  box-shadow: 5px 5px 5px green;
+}
 </style>
 </head>
 <body>
+
+  <audio class="background-sound" controls loop autoplay>
+      <source src="https://mohamedelghandour.github.io/Snake/sound/backgroundmusic.mp3" type="audio/ogg">
+  </audio>
+
   <section class="vh-100">
     <div class="container h-100">
 
       <div id="initialScreen" class="h-100">
-        <div style="border: 5px solid rgb(205, 221, 203);
-        border-radius: 5px;
-        box-shadow: 5px 5px 10px;" class="d-flex flex-column align-items-center justify-content-center h-100">
+        <div id="box" class="d-flex flex-column align-items-center justify-content-center" style="height:auto;">
+        <img src="snake.png" style="height: 200px;" alt="">
             <h1>Multiplayer Snake</h1>
             <br>
             <button
-            style="box-shadow: 5px 5px 5px green;"
               type="submit"
               class="btn btn-success"
               id="newGameButton"
@@ -37,8 +62,6 @@
             </div>
             <br>
             <button
-            style="box-shadow: 5px 5px 5px green;
-                   width: 280px;"
               type="submit"
               class="btn btn-success"
               id="joinGameButton"
@@ -59,10 +82,7 @@
 
     </div>
   </section>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
-  <!-- <script src ='https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js'></script> -->
-  <!-- <script src="./src/index.js"></script> -->
+  <script src="/socket.io/socket.io.js"></script>
   <script src="./app.js"></script>
 </body>
 </html>

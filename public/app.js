@@ -1,7 +1,6 @@
 'use strict';
 
 let bgColor= '#231f20';
-let snakeColor='#c2c2c2';
 let foodColor='#e66916';
 
 
@@ -9,7 +8,7 @@ let foodColor='#e66916';
 // const io = require('socket.io')(); 
 // console.log('yyyyyyyyyyy');
 // eslint-disable-next-line no-undef
-const socket = io('https://sleepy-island-33889.herokuapp.com/');
+const socket = io();
 // console.log('aaaaaaaaaaaaaa');
 socket.on('init', handelInit);
 socket.on('gameState', handelGameState);
@@ -24,6 +23,7 @@ const gameCodeInput = document.getElementById('gameCodeInput');
 const gameScreen = document.getElementById('gameScreen');
 const newGameBtn = document.getElementById('newGameButton');
 const joinGameBtn = document.getElementById('joinGameButton');
+
 
 newGameBtn.addEventListener('click',newGame);
 joinGameBtn.addEventListener('click',joinGame);
@@ -55,7 +55,7 @@ function init(){
   canvas = document.getElementById('canvas');
   ctx = canvas.getContext('2d');
   
-  canvas.width = canvas.height = 800;
+  canvas.width = canvas.height = 550;
   
   ctx.fillStyle = bgColor;
   ctx.fillRect(0, 0, canvas.width, canvas.height);
