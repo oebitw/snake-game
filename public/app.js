@@ -55,7 +55,7 @@ function init(){
   canvas = document.getElementById('canvas');
   ctx = canvas.getContext('2d');
   
-  canvas.width = canvas.height = 550;
+  canvas.width = canvas.height = 650;
   
   ctx.fillStyle = bgColor;
   ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -71,47 +71,20 @@ function keydown(e){
 // init();
 
 function paintGame(state){
-  // ctx.fillStyle = bgColor;
-  ctx.fillStyle = '#1C1D24';
+  ctx.fillStyle = bgColor;
   ctx.fillRect(0, 0, canvas.width, canvas.height);
-  let grd = ctx.createLinearGradient(0.000, 150.000, 300.000, 150.000);
-  // Add colors
-  grd.addColorStop(0.000, 'rgba(247, 149, 51, 1.000)');
-  grd.addColorStop(0.151, 'rgba(243, 112, 85, 1.000)');
-  grd.addColorStop(0.311, 'rgba(239, 78, 123, 1.000)');
-  grd.addColorStop(0.462, 'rgba(161, 102, 171, 1.000)');
-  grd.addColorStop(0.621, 'rgba(80, 115, 184, 1.000)');
-  grd.addColorStop(0.748, 'rgba(16, 152, 173, 1.000)');
-  grd.addColorStop(0.875, 'rgba(7, 179, 155, 1.000)');
-  grd.addColorStop(1.000, 'rgba(111, 186, 130, 1.000)');
-  ctx.fillStyle = grd;
 
+  const food = state.food;
   const gridsize = state.gridsize;
   //conventing it to game space 
   const size = canvas.width / gridsize;
-
-  // console.log(state.players[0].snake.length);
-  for (let i = 0; i < state.players[0].snake.length; i++) {
-    ctx.fillRect(
-      state.players[0].snake[i].x * gridsize,
-      state.players[0].snake[i].y * gridsize,
-      gridsize,
-      gridsize,
-    );
-    // if (state.snake[i].x == state.snakeX && state.snake[i].y == state.snakeY) {
-    //   state.size = 3;
-    // }
-  }
-
-  const food = state.food;
-
 
   ctx.fillStyle = foodColor;
   //conventing it to canvas space 
   ctx.fillRect(food.x * size, food.y * size, size, size);
 
-  paintPlayer(state.players[0], size, grd);
-  paintPlayer(state.players[1], size, 'pink');
+  paintPlayer(state.players[0], size, 'green');
+  paintPlayer(state.players[1], size, 'red');
 }
 
 function paintPlayer(playerState, size, colour) {
