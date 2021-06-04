@@ -8,6 +8,13 @@ const io = require('socket.io')(http,{cors: {
   methods: ['GET', 'POST'],
 }});
 
+const { initGame, gameLoop, getUpdatedVelocity } = require('./game-dev');
+const { FRAME_RATE } = require('./constants');
+const { makeid } = require('./utlis-dev');
+
+const state ={};     // added state to check the states of all possible rooms  ----------
+const clientRooms = {}; // to check room name with a particular user id ----------
+
 
 io.listen(httpServer);
 const express = require('express');
@@ -16,33 +23,23 @@ app.use(cors());
 app.use(express.static('../public'));
 
 
-const { initGame, gameLoop, getUpdatedVelocity } = require('./game-dev');
-const { FRAME_RATE } = require('./constants');
-const { makeid } = require('./utlis-dev');
-
-const state ={};     // added state to check the states of all possible rooms  ----------
-const clientRooms = {}; // to check room name with a particular user id ----------
-
 io.on('connection', client => {
   
-  console.log('run socket');
-  // Fixed functions names ------------- 
   client.on('keydown', handleKeydown);
-  client.on('newGame', handleNewGame);     //  called newGame event ----------
-  client.on('joinGame', handleJoinGame);  //  called joinGame event ----------
-
-  // added joinGame event handler ---------
+  client.on('newGame', handleNewGame);
+  client.on('joinGame', handleJoinGame);  
 
   function handleJoinGame(roomName) {
     const room = io.sockets.adapter.rooms[roomName];
+
     let allUsers;
+
     if (room) {
       allUsers = room.sockets;
     }
-    console.log('iiiiiiiiiiiiiii',room);
-
 
     let numClients = 0;
+
     if (allUsers) {
       numClients = Object.keys(allUsers).length;
     }
@@ -68,19 +65,18 @@ io.on('connection', client => {
   // added newGame event handler ----------
 
   function handleNewGame(){     
-    let roomName = makeid(5);
+    let roomName = makeid(6);
     clientRooms[client.id] = roomName;
-    console.log('in handel game');        
     client.emit('gameCode', roomName);
+
     state[roomName] = initGame();
-    console.log('after init',state[roomName]);
 
     client.join(roomName);
     client.number = 1;
     client.emit('init',1);
   }
 
-
+  // check the keycode 
   function handleKeydown(keyCode) {
     const roomName = clientRooms[client.id];
     if (!roomName) {
@@ -131,7 +127,4 @@ function emitGameOver(room, winner) {
     .emit('gameOver', JSON.stringify({ winner }));
 }
 
-
-
-httpServer.listen(process.env.PORT||3000);
-console.log('PORT 3000');
+httpServer.listen(process.env.PORT||3000,()=> console.log('PORT 3000'));
