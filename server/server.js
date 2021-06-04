@@ -1,9 +1,12 @@
 'use strict';
-const io = require('socket.io')();
 
-// removed createGameState and added initGame instead:  ----------
-// Imported makeid from utlis.js
-// const { createGameState, gameLoop, getUpdatedVelocity } = require('./game');
+const app = require('express')();
+const http = require('http');
+const httpServer=http.createServer(app);
+const io = require('socket.io')(http,{cors: {
+  origin: '*',
+  methods: ['GET', 'POST'],
+}});
 
 const { initGame, gameLoop, getUpdatedVelocity } = require('./game-dev');
 const { FRAME_RATE } = require('./constants');
@@ -12,35 +15,40 @@ const { makeid } = require('./utlis-dev');
 const state ={};     // added state to check the states of all possible rooms  ----------
 const clientRooms = {}; // to check room name with a particular user id ----------
 
+
+io.listen(httpServer);
+const express = require('express');
+const cors = require('cors');
+app.use(cors());
+app.use(express.static('../public'));
+
+
 io.on('connection', client => {
-  //   client.emit('init', {data : 'hello world'});
-  // const state = createGameState();    // Moved and edited in newGame handler ----------
-
-
-  // Fixed functions names ------------- 
+  
   client.on('keydown', handleKeydown);
-  client.on('newGame', handleNewGame);     //  called newGame event ----------
-  client.on('joinGame', handleJoinGame);  //  called joinGame event ----------
-
-  // added joinGame event handler ---------
+  client.on('newGame', handleNewGame);
+  client.on('joinGame', handleJoinGame);  
 
   function handleJoinGame(roomName) {
-    const room = io.sockets.adapter.rooms[roomName];
-
-    let allUsers;
-    if (room) {
-      allUsers = room.sockets;
-    }
-
-    let numClients = 0;
-    if (allUsers) {
-      numClients = Object.keys(allUsers).length;
-    }
-
-    if (numClients === 0) {
+    console.log(io.sockets.adapter);
+    let room = io.sockets.adapter.rooms.get(roomName);
+    // room = String(room);
+    console.log(room);
+    if (!room) {
       client.emit('unknownCode');
       return;
-    } else if (numClients > 1) {
+    } 
+    // let allUsers;
+    // if (room) {
+    //   allUsers = room.sockets;
+    // }
+    // console.log(allUsers);
+    let numClients = 0;
+    numClients = room.size;
+    // if (allUsers) {
+    // }
+    console.log(numClients);
+    if (numClients > 1) {
       client.emit('tooManyPlayers');
       return;
     }
@@ -48,6 +56,7 @@ io.on('connection', client => {
     clientRooms[client.id] = roomName;
 
     client.join(roomName);
+
     client.number = 2;
     client.emit('init', 2);
     
@@ -56,17 +65,18 @@ io.on('connection', client => {
 
   // added newGame event handler ----------
 
-  function handleNewGame(){             
-    let roomName = makeid(5);
+  function handleNewGame(){     
+    let roomName = makeid(6);
     clientRooms[client.id] = roomName;
     client.emit('gameCode', roomName);
-    state[roomName] = initGame(); 
+
+    state[roomName] = initGame();
     client.join(roomName);
     client.number = 1;
     client.emit('init',1);
   }
 
-
+  // check the keycode 
   function handleKeydown(keyCode) {
     const roomName = clientRooms[client.id];
     if (!roomName) {
@@ -74,6 +84,7 @@ io.on('connection', client => {
     }
     try {
       keyCode = parseInt(keyCode);
+      console.log('lll',keyCode);
     } catch(e) {
       console.error(e);
       return;
@@ -117,7 +128,4 @@ function emitGameOver(room, winner) {
     .emit('gameOver', JSON.stringify({ winner }));
 }
 
-
-
-io.listen(process.env.PORT||3000);
-console.log('PORT 3000');
+httpServer.listen(process.env.PORT||3000,()=> console.log('PORT 3000'));

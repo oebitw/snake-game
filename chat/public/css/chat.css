@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=Odibee+Sans&display=swap');
+
+body {
+
+    background-image: url(https://raw.githubusercontent.com/oebitw/snake-game/Anwar/public/background.png);
+    background-size: 100% 50em;
+    background-repeat: no-repeat;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+  }
+
+#message-container {
+  width: 80%;
+  max-width: 1200px;
+  max-height: 600px;
+  overflow-y: scroll;
+  scrollbar-color: #dfe079 #69a84edb;
+  word-wrap: break-word;
+  font-family: 'Odibee Sans', cursive;
+  font-size: 1.4em;
+  border: solid 4px #cacc33;
+  border-radius: 5px;
+  box-shadow: 2px 2px 2px 2px  #2E353C;
+}
+
+#message-container div {
+  background-color: #50b048b3;
+  padding: 5px;
+}
+
+#message-container div:nth-child(2n) {
+  background-color: #34822eb3;
+  color: white;
+}
+
+#send-container {
+  position: fixed;
+  padding-bottom: 30px;
+  bottom: 0;
+  background-color: #a3d34c;
+  max-width: 1200px;
+  width: 80%;
+  display: flex;
+  border-radius:10px;
+  box-shadow: 2px 2px 2px 2px  #2E353C;
+
+}
+
+#message-input {
+  flex-grow: 1;
+  background-color:  #eee;
+  box-shadow: none;
+  border-radius:10px;
+  height250px;
+}
+#send-button{
+ font-family: 'Odibee Sans', cursive;
+  font-size: 20px;
+ background-color:  #278556;
+  width: 80px;
+  border: none;
+  color: #eee;
+  font-weight: bold;
+  margin-left:5px;
+}

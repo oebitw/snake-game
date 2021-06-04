@@ -36,8 +36,8 @@ function createGameState() {
       ],
     }, {
       pos: {
-        x: 18,
-        y: 10,
+        x: 3,
+        y: 15,
       },
       vel: {
         x: 0,
