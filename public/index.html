@@ -29,12 +29,41 @@ body{
   padding: 10px;
   margin: 50px;
 }
+canvas{
+  border: 5px solid rgb(205, 221, 203);
+  border-radius: 5px; 
+  box-shadow: 5px 5px 10px; 
+}
+a{
+  border: 5px solid rgb(205, 221, 203);
+  border-radius: 5px; 
+  box-shadow: 5px 5px 10px; 
+  padding: 10px;
+  color: black;
+  background-color: white;
+  opacity: 50%;
+
+
+}
 button{
   box-shadow: 5px 5px 5px green;
+}
+h2 {
+  margin: 30px auto;
+  text-align: center;
+}
+a:link {
+  text-decoration: none;
 }
 </style>
 </head>
 <body>
+
+  <header>
+    <h2>
+      <a href="https://chatapp-snake.herokuapp.com/" target="_blank">Snake Chat</a>
+    </h2>
+  </header>
 
   <audio class="background-sound" controls loop autoplay>
       <source src="https://mohamedelghandour.github.io/Snake/sound/backgroundmusic.mp3" type="audio/ogg">

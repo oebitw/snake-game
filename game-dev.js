@@ -1,18 +1,12 @@
-'use strict'; 
+const { GRID_SIZE } = require('./constants');
 
-const {GRID_SIZE} = require('./constants');
-
-// removed createGameState and added initGame ------------
-module.exports= {
-//   createGameState,
+module.exports = {
   initGame,
   gameLoop,
   getUpdatedVelocity,
 };
 
-// initGame function ----------------------------
-
-function initGame(){
+function initGame() {
   const state = createGameState();
   randomFood(state);
   return state;
@@ -36,8 +30,8 @@ function createGameState() {
       ],
     }, {
       pos: {
-        x: 3,
-        y: 15,
+        x: 18,
+        y: 10,
       },
       vel: {
         x: 0,
@@ -54,34 +48,34 @@ function createGameState() {
   };
 }
 
-function gameLoop(state){
-  if(!state){
+function gameLoop(state) {
+  if (!state) {
     return;
   }
+
   const playerOne = state.players[0];
   const playerTwo = state.players[1];
 
   playerOne.pos.x += playerOne.vel.x;
   playerOne.pos.y += playerOne.vel.y;
 
-  playerTwo.pos.x += playerOne.vel.x;
-  playerTwo.pos.y += playerOne.vel.y;
+  playerTwo.pos.x += playerTwo.vel.x;
+  playerTwo.pos.y += playerTwo.vel.y;
 
-
-  if(playerOne.pos.x < 0 || playerOne.pos.x > GRID_SIZE || playerOne.pos.y < 0 || playerOne.pos.y > GRID_SIZE ){
+  if (playerOne.pos.x < 0 || playerOne.pos.x > GRID_SIZE || playerOne.pos.y < 0 || playerOne.pos.y > GRID_SIZE) {
     return 2;
-  } 
+  }
 
-  if(playerTwo.pos.x < 0 || playerTwo.pos.x > GRID_SIZE || playerTwo.pos.y < 0 || playerTwo.pos.y > GRID_SIZE ){
+  if (playerTwo.pos.x < 0 || playerTwo.pos.x > GRID_SIZE || playerTwo.pos.y < 0 || playerTwo.pos.y > GRID_SIZE) {
     return 1;
-  } 
-  
-  if(state.food.x === playerOne.pos.x && state.food.y === playerOne.pos.y){
-    playerOne.snake.push({...playerOne.pos});
+  }
+
+  if (state.food.x === playerOne.pos.x && state.food.y === playerOne.pos.y) {
+    playerOne.snake.push({ ...playerOne.pos });
     playerOne.pos.x += playerOne.vel.x;
     playerOne.pos.y += playerOne.vel.y;
     randomFood(state);
-  } 
+  }
 
   if (state.food.x === playerTwo.pos.x && state.food.y === playerTwo.pos.y) {
     playerTwo.snake.push({ ...playerTwo.pos });
@@ -90,17 +84,16 @@ function gameLoop(state){
     randomFood(state);
   }
 
-
-  if (playerOne.vel.x || playerOne.vel.y){
-    for (let cell of playerOne.snake){
-      if(cell.x === playerOne.pos.x && playerOne.pos.y){
+  if (playerOne.vel.x || playerOne.vel.y) {
+    for (let cell of playerOne.snake) {
+      if (cell.x === playerOne.pos.x && cell.y === playerOne.pos.y) {
         return 2;
       }
-    } 
-    playerOne.snake.push({...playerOne.pos});
+    }
+
+    playerOne.snake.push({ ...playerOne.pos });
     playerOne.snake.shift();
   }
-
 
   if (playerTwo.vel.x || playerTwo.vel.y) {
     for (let cell of playerTwo.snake) {
@@ -115,20 +108,21 @@ function gameLoop(state){
 
   return false;
 }
+let food;
+function randomFood(state) {
+  food = {
+    x: Math.floor(Math.random() * GRID_SIZE),
+    y: Math.floor(Math.random() * GRID_SIZE),
+  };
 
-function randomFood(state){
-  let food = {
-    x: Math.floor(Math.random()) * GRID_SIZE,
-    Y: Math.floor(Math.random()) * GRID_SIZE,
-  }; 
-  for(let cell of state.players[0].snake){
-    if(cell.x === food.x && cell.y === food.y){
+  for (let cell of state.players[0].snake) {
+    if (cell.x === food.x && cell.y === food.y) {
       return randomFood(state);
     }
   }
 
-  for(let cell of state.players[1].snake){
-    if(cell.x === food.x && cell.y === food.y){
+  for (let cell of state.players[1].snake) {
+    if (cell.x === food.x && cell.y === food.y) {
       return randomFood(state);
     }
   }
@@ -136,19 +130,19 @@ function randomFood(state){
   state.food = food;
 }
 
-function getUpdatedVelocity(keyCode){
-  switch (keyCode){
-  case 37 : {
-    return {x: -1 , y:0};
+function getUpdatedVelocity(keyCode) {
+  switch (keyCode) {
+  case 37: { // left
+    return { x: -1, y: 0 };
   }
-  case 38 : {
-    return {x: 0 , y:-1};
+  case 38: { // down
+    return { x: 0, y: -1 };
   }
-  case 39 : {
-    return {x: 1 , y:0};
+  case 39: { // right
+    return { x: 1, y: 0 };
   }
-  case 40 : {
-    return {x: 0 , y:1};
+  case 40: { // up
+    return { x: 0, y: 1 };
   }
   }
 }

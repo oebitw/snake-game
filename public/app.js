@@ -1,8 +1,7 @@
 'use strict';
-
-let bgColor= '#231f20';
-let foodColor='#e66916';
-
+// 231f20
+let bgColor= '#3b7f48';
+let foodColor='#b25050';
 
 
 // const io = require('socket.io')(); 
@@ -83,8 +82,8 @@ function paintGame(state){
   //conventing it to canvas space 
   ctx.fillRect(food.x * size, food.y * size, size, size);
 
-  paintPlayer(state.players[0], size, 'green');
-  paintPlayer(state.players[1], size, 'red');
+  paintPlayer(state.players[0], size, '#44ada7');
+  paintPlayer(state.players[1], size, '#f7ec59');
 }
 
 function paintPlayer(playerState, size, colour) {
