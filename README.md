@@ -13,6 +13,9 @@ Clone the repository from GitHub Run the command npm i express cors socket.io so
 # Links to checkout : 
 
 [Heroku Link](https://snake-oebitw.herokuapp.com/)
+
 [Repo Link](https://github.com/oebitw/snake-game)
+
 [Pull Requests](https://github.com/oebitw/snake-game/pulls)
+
 [Contributors](https://github.com/oebitw/snake-game/pulse)
