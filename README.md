@@ -1,5 +1,7 @@
 # snake-game
 
+![SnakeGame](images/snakeGame.png)
+
 **snake game using socket.io and JS**
 
 Our app is the good old snake game with a bit of enhancement, were it is played with two players, this was done by utilizing socket.io and JS, so to start the game one player starts the game, which will generate an ID, this ID is sent to the other player to allow him to join the game. after that both player can start and enjoy the game. 
