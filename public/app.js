@@ -1,15 +1,13 @@
 'use strict';
-
-let bgColor= '#231f20';
-let snakeColor='#c2c2c2';
-let foodColor='#e66916';
-
+// 231f20
+let bgColor= '#3b7f48';
+let foodColor='#b25050';
 
 
 // const io = require('socket.io')(); 
 // console.log('yyyyyyyyyyy');
 // eslint-disable-next-line no-undef
-const socket = io('https://sleepy-island-33889.herokuapp.com/');
+const socket = io();
 // console.log('aaaaaaaaaaaaaa');
 socket.on('init', handelInit);
 socket.on('gameState', handelGameState);
@@ -24,6 +22,7 @@ const gameCodeInput = document.getElementById('gameCodeInput');
 const gameScreen = document.getElementById('gameScreen');
 const newGameBtn = document.getElementById('newGameButton');
 const joinGameBtn = document.getElementById('joinGameButton');
+
 
 newGameBtn.addEventListener('click',newGame);
 joinGameBtn.addEventListener('click',joinGame);
@@ -55,7 +54,7 @@ function init(){
   canvas = document.getElementById('canvas');
   ctx = canvas.getContext('2d');
   
-  canvas.width = canvas.height = 800;
+  canvas.width = canvas.height = 650;
   
   ctx.fillStyle = bgColor;
   ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -83,8 +82,8 @@ function paintGame(state){
   //conventing it to canvas space 
   ctx.fillRect(food.x * size, food.y * size, size, size);
 
-  paintPlayer(state.players[0], size, snakeColor);
-  paintPlayer(state.players[1], size, 'red');
+  paintPlayer(state.players[0], size, '#44ada7');
+  paintPlayer(state.players[1], size, '#f7ec59');
 }
 
 function paintPlayer(playerState, size, colour) {
