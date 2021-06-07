@@ -16,6 +16,8 @@ Clone the repository from GitHub Run the command npm i express cors socket.io so
 
 [Heroku Link](https://snake-oebitw.herokuapp.com/)
 
+[Chat App Branch](https://github.com/oebitw/snake-game/tree/amjad-dev)
+
 [Repo Link](https://github.com/oebitw/snake-game)
 
 [Pull Requests](https://github.com/oebitw/snake-game/pulls)
